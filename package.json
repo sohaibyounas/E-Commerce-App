@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.14.14",
     "@mui/material": "^5.14.13",
     "@mui/system": "^5.14.13",
+    "axios": "^1.20.0",
     "react": "^19",
     "react-dom": "^19",
     "react-router-dom": "^6.25.0"
@@ -27,5 +28,16 @@
     "overrides": {
       "hono": "4.12.25"
     }
-  }
+  },
+  "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).",
+  "main": "vite.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sohaibyounas/E-Commerce-App.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/sohaibyounas/E-Commerce-App/issues"
+  },
+  "homepage": "https://github.com/sohaibyounas/E-Commerce-App#readme"
 }
