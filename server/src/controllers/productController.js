@@ -18,7 +18,7 @@ const createProduct = async (req, res, next) => {
 // Get All Products
 const getProducts = async (req, res, next) => {
   try {
-    const products = await productService.getProducts();
+    const products = await productService.getProducts(req.query);
 
     res.status(200).json({
       success: true,

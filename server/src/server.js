@@ -2,8 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-const productRoutes = require("./routes/productRoutes");
 const errorHandler = require("./middleware/errorHandler");
+const path = require("path");
+const authRoutes = require("./routes/authRoutes");
+const productRoutes = require("./routes/productRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 
 dotenv.config();
 connectDB();
@@ -16,6 +19,14 @@ app.use(express.json());
 
 // Routes
 app.use("/api/products", productRoutes);
+app.use("/api/upload", uploadRoutes);
+
+// Middlewares section mein express.json() ke sath add karein:
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+
+// products routes list:
+app.use("/api/auth", authRoutes);
+// app.use("/api/categories", categoryRoutes);
 
 // Health Check
 app.get("/api/health", (req, res) => {
