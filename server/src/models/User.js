@@ -28,6 +28,18 @@ const userSchema = new mongoose.Schema(
       enum: ["customer", "admin"],
       default: "customer",
     },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    emailVerificationToken: {
+      type: String,
+      select: false,
+    },
+    emailVerificationExpires: {
+      type: Date,
+      select: false,
+    },
   },
   {
     timestamps: true,
@@ -45,6 +57,21 @@ userSchema.pre("save", async function () {
 // Instance method: Password verification during login
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
+};
+
+// Generate email verification token
+userSchema.methods.createEmailVerificationToken = function () {
+  const crypto = require("crypto");
+  const verificationToken = crypto.randomBytes(32).toString("hex");
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(verificationToken)
+    .digest("hex");
+
+  this.emailVerificationToken = hashedToken;
+  this.emailVerificationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+
+  return verificationToken; // Return raw token to send in email
 };
 
 const User = mongoose.model("User", userSchema);

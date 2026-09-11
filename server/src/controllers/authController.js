@@ -38,8 +38,23 @@ const getMe = async (req, res, next) => {
   }
 };
 
+// Verify Email
+const verifyEmail = async (req, res, next) => {
+  try {
+    const data = await authService.verifyEmail(req.params.token);
+    res.status(200).json({
+      success: true,
+      message: "Email verified successfully",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
   getMe,
+  verifyEmail,
 };
