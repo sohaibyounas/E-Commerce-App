@@ -7,6 +7,7 @@ import { getTheme } from "./theme";
 
 import MainLayout from "./components/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 import Dashboard from "./pages/Dashboard";
 import Categories from "./pages/Categories";
@@ -27,7 +28,8 @@ const AppContent = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <Routes>
+        <ErrorBoundary>
+          <Routes>
           <Route path="/login" element={<Login />} />
 
           <Route element={<ProtectedRoute />}>
@@ -44,6 +46,7 @@ const AppContent = () => {
             </Route>
           </Route>
         </Routes>
+        </ErrorBoundary>
       </BrowserRouter>
     </ThemeProvider>
   );

@@ -11,7 +11,14 @@ const ProductsTable = () => {
       setLoading(true);
       // Backend ke search & pagination features yahan call ho rahe hain
       const res = await fetchProducts({ search });
-      setProducts(res.data);
+      const items = Array.isArray(res)
+        ? res
+        : Array.isArray(res?.data)
+          ? res.data
+          : Array.isArray(res?.data?.products)
+            ? res.data.products
+            : [];
+      setProducts(items);
     } catch (err) {
       console.error("Failed to load products", err);
     } finally {
@@ -63,9 +70,9 @@ const ProductsTable = () => {
                 <td className="py-2">
                   <img
                     src={
-                      item.image.startsWith("http")
+                      item.image?.startsWith("http")
                         ? item.image
-                        : `http://localhost:5000${item.image}`
+                        : `http://localhost:5000${item.image ?? ""}`
                     }
                     alt={item.name}
                     className="w-10 h-10 object-cover rounded"
